@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Standard Favicon (Browser Tabs) -->
+<link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+<link rel="icon" type="image/png" sizes="16x16" href="logo.png">
+
+<!-- Apple Touch Icon (iOS Home Screen / iPad / Mac Safari) -->
+<link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+
+<!-- Android / Chrome Home Screen -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="TicketMaster">
+
+<!-- Windows Tile Icon -->
+<meta name="msapplication-TileImage" content="logo.png">
+<meta name="msapplication-TileColor" content="#0a5cff">
+
+<!-- iOS Web App Configurations -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TicketMaster">
+<title>TicketMaster</title>
+<style>
+  :root{
+    --blue: #0a5cff;
+    --blue-dark: #0442c4;
+    --black: #0b0b0c;
+    --gray-bg: #f4f5f7;
+    --line: #e3e5e9;
+    --text: #16171a;
+    --sub: #6b6f76;
+    --radius: 14px;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html,body{
+    margin:0; padding:0; height:100%; width:100%;
+    background: var(--gray-bg);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  .phone{
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
+    display:flex;
+    flex-direction: column;
+  }
+
+  .topbar{
+    height: 52px;
+    background:#000;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 0 16px;
+    flex-shrink:0;
+  }
+  .topbar .title{font-size:17px; font-weight:700;}
+  .topbar .side{font-size:15px; color:#cfd3da; min-width:46px;}
+  .topbar .side.right{text-align:right; color:#5c9cff; font-weight:600;}
+  
+  .topbar-center-flag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 12px;
+  }
+
+  .flag-top{
+    width: 22px;
+    height: 15px;
+    border-radius: 2px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .screen{
+    flex:1;
+    overflow-y:auto;
+    background: var(--gray-bg);
+    display:none;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .screen::-webkit-scrollbar{display:none;}
+  .screen.active{display:block;}
+
+  /* ---------- Bottom Nav ---------- */
+  .tabbar{
+    height: 52px;
+    background:#000;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-bottom: 5px;
+    flex-shrink:0;
+    border-top: 1px solid #1c1c1e;
+    /* gap: 16px; */
+  }
+  .tabbar button{
+    background:none; border:none; color:#8a8d93;
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    font-size:10.5px; font-family:inherit; font-weight:500;
+    cursor:pointer; position:relative; padding:2px 6px;
+  }
+  .tabbar button.active{color:var(--blue);}
+  .tabbar button svg{width:22px; height:22px;}
+  .badge{
+    position:absolute; top:-2px; right:-2px;
+    background:#ff3b30; color:#fff; font-size:9px; font-weight:800;
+    width:15px; height:15px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ================= CREATE EVENT SCREEN ================= */
+  .ce-wrap{padding: 22px 20px 40px; max-width: 600px; margin: 0 auto;}
+  .ce-h1{font-size:30px; font-weight:800; letter-spacing:-.5px; margin:4px 0 22px;}
+  .field{margin-bottom:20px;}
+  .field label{display:block; font-size:15px; font-weight:700; margin-bottom:8px;}
+  .field input, .field select{
+    width:100%; padding:13px 14px; font-size:15px; font-family:inherit;
+    border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--text);
+    appearance:none; -webkit-appearance:none;
+  }
+  .field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%236b6f76' stroke-width='2' fill='none' fill-rule='evenodd'/></svg>"); background-repeat:no-repeat; background-position: right 14px center;}
+  .field input:focus, .field select:focus{outline:2px solid var(--blue); outline-offset:1px;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .create-btn{
+    width:100%; padding:15px; background:var(--blue); color:#fff; border:none;
+    border-radius:12px; font-size:16px; font-weight:700; font-family:inherit; cursor:pointer; margin-top:8px;
+  }
+  .create-btn:active{background:var(--blue-dark);}
+
+  /* ================= MY TICKETS SCREEN ================= */
+  .mt-topbar-title{color:#fff;}
+  .carousel-wrap{padding:18px 0 8px;}
+  .carousel{
+    display:flex; gap:14px; overflow-x:auto; padding: 0 26px 6px;
+    scroll-snap-type:x mandatory; -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .carousel::-webkit-scrollbar{display:none;}
+  .ticket-card{
+    scroll-snap-align:center;
+    flex:0 0 88%;
+    max-width: 400px;
+    margin: 0 auto;
+    background:#fff; border-radius:18px; overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,.12);
+  }
+  .ticket-head{
+    background:var(--blue); color:#fff; text-align:center; padding:14px 10px 16px;
+  }
+  .ticket-head .lbl{font-size:13px; font-weight:700; letter-spacing:.5px; margin-bottom:10px;}
+  .ticket-nums{display:flex; justify-content:space-around;}
+  .ticket-nums div{display:flex; flex-direction:column; align-items:center;}
+  .ticket-nums .k{font-size:11px; opacity:.85; font-weight:600; margin-bottom:2px;}
+  .ticket-nums .v{font-size:22px; font-weight:800;}
+  .ticket-art{height:150px; background-size:cover; background-position:center; position:relative;}
+  .ticket-art::after{content:"";position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.65));}
+  .ticket-art .info{position:absolute; left:16px; right:16px; bottom:12px; color:#fff; z-index:2;}
+  .ticket-art .info h3{margin:0 0 4px; font-size:17px; font-weight:800; line-height:1.2;}
+  .ticket-art .info p{margin:0; font-size:12.5px; opacity:.9;}
+  .ticket-body{padding:16px; text-align:center;}
+  .ticket-body .level{font-size:13px; font-weight:700; letter-spacing:.4px; color:#333; margin-bottom:14px;}
+  .view-btn{
+    width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px;
+    padding:12px; font-weight:700; font-size:14.5px; font-family:inherit; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:12px;
+  }
+  .details-link{color:var(--blue); font-weight:700; font-size:14px; background:none; border:none; cursor:pointer; font-family:inherit;}
+  .ticket-foot{height:14px; background:var(--blue);}
+  .dots{display:flex; justify-content:center; gap:6px; margin:14px 0 18px;}
+  .dots span{width:6px; height:6px; border-radius:50%; background:#c8cbd1;}
+  .dots span.on{background:#000; width:7px; height:7px;}
+  .action-row{display:flex; gap:12px; padding:0 20px 20px; max-width: 440px; margin: 0 auto;}
+  .action-row button{
+    flex:1; padding:14px; border-radius:10px; font-weight:700; font-size:15px; font-family:inherit; cursor:pointer; border:none;
+  }
+  .action-row .transfer{background:var(--blue); color:#fff;}
+  .action-row .sell{background:var(--blue); color:#fff;}
+  .map-card{
+    margin:0 20px 24px; background:#7c9473; border-radius:14px; overflow:hidden; position:relative; height:150px;
+    max-width: 600px; margin-left: auto; margin-right: auto;
+  }
+  .map-card .venue-info{
+    position:absolute; left:12px; right:12px; top:12px; background:#fff; border-radius:12px; padding:12px 14px; box-shadow:0 4px 14px rgba(0,0,0,.15);
+  }
+  .venue-info h4{margin:0 0 2px; font-size:15px; font-weight:800;}
+  .venue-info p{margin:0 0 6px; font-size:12.5px; color:var(--sub);}
+  .venue-info .rating{font-size:12.5px; color:#333; display:flex; align-items:center; gap:4px;}
+  .venue-info .rating .star{color:#f5a623;}
+
+  /* ================= MY EVENTS SCREEN ================= */
+  .tabs2{display:flex; background:var(--blue);}
+  .tabs2 button{
+    flex:1; background:none; border:none; color:#cfe0ff; padding:14px 0; font-size:14px; font-weight:700;
+    font-family:inherit; cursor:pointer; border-bottom:3px solid transparent;
+  }
+  .tabs2 button.active{color:#fff; border-color:#fff;}
+  .event-list{padding:0;}
+  .event-card{
+    background:#000; position:relative; height:180px; background-size:cover; background-position:center;
+    display:flex; align-items:flex-end; cursor:pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .event-card::after{content:"";position:absolute; inset:0; background:linear-gradient(180deg, transparent 40%, rgba(0,0,0,.85));}
+  .event-card .ec-info{position:relative; z-index:2; color:#fff; padding:14px 16px;}
+  .event-card .ec-info h3{margin:0 0 4px; font-size:18px; font-weight:800;}
+  .event-card .ec-info p{margin:0 0 6px; font-size:12.5px; opacity:.9;}
+  .event-card .tag{
+    display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.15);
+    padding:3px 9px; border-radius:20px; font-size:11.5px; font-weight:700;
+  }
+  .tag img.flag-img {
+    width: 16px;
+    height: 11px;
+    object-fit: cover;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .empty-state{padding:80px 30px; text-align:center; color:var(--sub);}
+  .empty-state h3{color:var(--text); margin-bottom:8px;}
+
+  /* ================= TRANSFER SCREEN ================= */
+  .tr-hero{height:150px; background-size:cover; background-position:center; position:relative;}
+  .tr-hero::after{content:"";position:absolute; inset:0; background:rgba(0,0,0,.4);}
+  .tr-sheet{
+    background:#fff; margin-top:-26px; border-radius:22px 22px 0 0; position:relative; z-index:2; padding:22px 20px 30px; min-height:520px;
+    max-width: 600px; margin-left: auto; margin-right: auto;
+  }
+  .tr-title{text-align:center; font-size:13px; font-weight:800; letter-spacing:1px; color:#8a8d93; margin-bottom:6px;}
+  .tr-sel{text-align:center; font-size:14.5px; font-weight:700; margin-bottom:20px;}
+  .tr-sel .muted{color:var(--sub); font-weight:600;}
+  hr.tr{border:none; border-top:1px solid var(--line); margin: 0 0 20px;}
+  .tr-field{margin-bottom:18px;}
+  .tr-field label{display:block; font-size:13.5px; font-weight:700; color:#333; margin-bottom:7px;}
+  .tr-field input, .tr-field textarea{
+    width:100%; padding:12px 13px; font-size:15px; font-family:inherit; border:1px solid var(--line);
+    border-radius:10px; background:#fbfbfc; color:var(--text);
+  }
+  .tr-field textarea{min-height:70px; resize:vertical;}
+  .tr-field input:focus, .tr-field textarea:focus{outline:2px solid var(--blue); outline-offset:1px; background:#fff;}
+  .send-btn{
+    width:100%; padding:15px; background:var(--blue); color:#fff; border:none; border-radius:12px;
+    font-size:16px; font-weight:700; font-family:inherit; cursor:pointer; margin-top:6px;
+  }
+  .send-btn:disabled{background:#b9c6e8; cursor:not-allowed;}
+
+  .toast{
+    position:absolute; left:20px; right:20px; bottom:100px; background:#111; color:#fff;
+    padding:14px 16px; border-radius:12px; font-size:14px; font-weight:600; text-align:center;
+    box-shadow:0 10px 24px rgba(0,0,0,.3); z-index:50; opacity:0; pointer-events:none;
+    transition: opacity .25s ease, transform .25s ease; transform: translateY(8px);
+  }
+  .toast.show{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="phone" id="app-root">
+
+  <!-- ===================== CREATE EVENT ===================== -->
+  <div class="screen active" id="screen-create">
+    <div class="ce-wrap">
+      <div class="ce-h1">Create Event</div>
+
+      <div class="field">
+        <label for="f-title">Show Title:</label>
+        <input id="f-title" type="text" placeholder="Event Title">
+      </div>
+
+      <div class="field">
+        <label for="f-img">Image Link:</label>
+        <input id="f-img" type="text" placeholder="paste Image link">
+      </div>
+
+      <div class="field">
+        <label for="f-date">Date &amp; Time:</label>
+        <input id="f-date" type="text" placeholder="Date and Time">
+      </div>
+
+      <div class="field">
+        <label for="f-venue">Venue:</label>
+        <input id="f-venue" type="text" placeholder="Venue">
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="f-sec">Sec:</label>
+          <input id="f-sec" type="text" placeholder="Section">
+        </div>
+        <div class="field">
+          <label for="f-row">Row:</label>
+          <input id="f-row" type="text" placeholder="Row">
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="f-seat">Seat (Number or -):</label>
+          <input id="f-seat" type="text" placeholder="Seat Number">
+        </div>
+        <div class="field">
+          <label for="f-num">Number of Tickets:</label>
+          <select id="f-num">
+            <option selected>1</option><option>2</option><option >3</option><option>4</option><option>5</option><option>6</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-level">Level:</label>
+        <input id="f-level" type="text" placeholder="Ticket Level">
+      </div>
+
+      <button class="create-btn" id="create-submit">Proceed</button>
+    </div>
+  </div>
+
+  <!-- ===================== MY TICKETS ===================== -->
+  <div class="screen" id="screen-tickets">
+    <div class="topbar">
+      <div class="side" style="cursor:pointer;" onclick="showScreen('events')">✕</div>
+      <div class="title mt-topbar-title">My Tickets</div>
+      <div class="topbar-center-flag">
+        <img id="tickets-topbar-flag" class="flag-top" src="https://flagcdn.com/w40/us.png" alt="Country Flag" />
+      </div>
+      <div class="side right">Help</div>
+    </div>
+    <div class="carousel-wrap">
+      <div class="carousel" id="ticket-carousel"></div>
+      <div class="dots" id="ticket-dots"></div>
+    </div>
+    <div class="action-row">
+      <button class="transfer" onclick="showScreen('transfer')">Transfer</button>
+      <button class="sell">Sell</button>
+    </div>
+    <div class="map-card">
+      <div class="venue-info">
+        <h4 id="venue-title">Soldier Field</h4>
+        <p id="venue-address">1410 Special Olympics Dr, Chicago, IL 60605, USA</p>
+        <div class="rating"><span class="star">★</span> 4.5 (15,771)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MY EVENTS ===================== -->
+  <div class="screen" id="screen-events">
+    <div class="topbar">
+      <div class="side"></div>
+      <div class="title">My Events</div>
+      <div class="side right">
+        <img id="topbar-flag" class="flag-top" src="https://flagcdn.com/w40/us.png" alt="Country Flag" />
+      </div>
+    </div>
+    <div class="tabs2">
+      <button class="active" id="tab-upcoming">UPCOMING (<span id="count-upcoming">1</span>)</button>
+      <button id="tab-past">PAST (0)</button>
+    </div>
+    <div class="event-list" id="event-list"></div>
+  </div>
+
+  <!-- ===================== TRANSFER ===================== -->
+  <div class="screen" id="screen-transfer">
+    <div class="tr-hero" id="tr-hero" style="background-image:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800')"></div>
+    <div class="tr-sheet">
+      <div class="tr-title">TRANSFER TICKETS</div>
+      <div class="tr-sel"><span id="tr-count">2</span> Tickets Selected &nbsp; <span class="muted" id="tr-seats">Sec 329 Row 5 Seat 5, 6</span></div>
+      <hr class="tr">
+      <div class="tr-field">
+        <label for="tr-first">First Name:</label>
+        <input id="tr-first" type="text" placeholder="First name">
+      </div>
+      <div class="tr-field">
+        <label for="tr-last">Last Name:</label>
+        <input id="tr-last" type="text" placeholder="Last name">
+      </div>
+      <div class="tr-field">
+        <label for="tr-contact">Email or Mobile Number:</label>
+        <input id="tr-contact" type="text" placeholder="Email or Mobile Number">
+      </div>
+      <div class="tr-field">
+        <label for="tr-note">Note:</label>
+        <textarea id="tr-note" placeholder="Add a note (optional)"></textarea>
+      </div>
+      <button class="send-btn" id="tr-send">Send Transfer</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- ===================== TAB BAR ===================== -->
+  <div class="tabbar">
+    <button data-tab="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Home
+    </button>
+    <button data-tab="foryou">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.4-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.6-9.5 9-9.5 9z"/></svg>
+      For You
+    </button>
+    <button data-tab="events" class="active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg>
+      My Events
+    </button>
+    <button data-tab="sell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M8 10h8M8 14h8"/></svg>
+      Sell
+    </button>
+    <button data-tab="account" style="position:relative;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+      My Account
+      <span class="badge">1</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  function goFullscreen() {
+    const docEl = document.documentElement;
+    if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(() => {});
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen();
+      } else if (docEl.mozRequestFullScreen) {
+        docEl.mozRequestFullScreen();
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+      }
+    }
+  }
+
+  document.addEventListener('click', goFullscreen, { once: false });
+
+  let events = [
+    {
+      title: "BTS WORLD TOUR 'ARIRANG' IN CHICAGO",
+      date: "Sun, Aug 27, 2026, 8:00pm",
+      venue: "Soldier Field • Chicago, IL",
+      img: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800",
+      sec: "301", row: "16", seat: "5", tickets: 3, level: "CLUB LEVEL",
+      countryCode: "us"
+    }
+  ];
+
+  function renderTickets(){
+    const carousel = document.getElementById('ticket-carousel');
+    const dots = document.getElementById('ticket-dots');
+    carousel.innerHTML = '';
+    dots.innerHTML = '';
+    events.forEach((ev, i) => {
+      carousel.innerHTML += `
+        <div class="ticket-card">
+          <div class="ticket-head">
+            <div class="lbl">STANDARD TICKETS</div>
+            <div class="ticket-nums">
+              <div><span class="k">SEC</span><span class="v">${ev.sec}</span></div>
+              <div><span class="k">ROW</span><span class="v">${ev.row}</span></div>
+              <div><span class="k">SEAT</span><span class="v">${ev.seat}</span></div>
+            </div>
+          </div>
+          <div class="ticket-art" style="background-image:url('${ev.img}')">
+            <div class="info">
+              <h3>${ev.title}</h3>
+              <p>${ev.date} • ${ev.venue}</p>
+            </div>
+          </div>
+          <div class="ticket-body">
+            <div class="level">${ev.level}</div>
+            <button class="view-btn">🎟 View Ticket</button>
+            <button class="details-link">Ticket Details</button>
+          </div>
+          <div class="ticket-foot"></div>
+        </div>`;
+      dots.innerHTML += `<span class="${i===0?'on':''}"></span>`;
+    });
+  }
+
+  function renderEvents(){
+    const list = document.getElementById('event-list');
+    document.getElementById('count-upcoming').textContent = events.length;
+    if(events.length === 0){
+      list.innerHTML = `<div class="empty-state"><h3>No upcoming events</h3><p>Events you buy or create will show up here.</p></div>`;
+      return;
+    }
+    list.innerHTML = events.map(ev => {
+      const code = ev.countryCode || 'us';
+      const flagUrl = `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
+      
+      if(document.getElementById('topbar-flag')) {
+        document.getElementById('topbar-flag').src = flagUrl;
+      }
+      if(document.getElementById('tickets-topbar-flag')) {
+        document.getElementById('tickets-topbar-flag').src = flagUrl;
+      }
+      
+      const venueParts = ev.venue.split('•');
+      if(venueParts.length > 0) {
+        document.getElementById('venue-title').textContent = venueParts[0].trim();
+      }
+      document.getElementById('venue-address').textContent = ev.venue;
+
+      return `
+        <div class="event-card" style="background-image:url('${ev.img}')" onclick="showScreen('tickets')">
+          <div class="ec-info">
+            <h3>${ev.title}</h3>
+            <p>${ev.date} - ${ev.venue}</p>
+            <span class="tag">
+              <img class="flag-img" src="${flagUrl}" alt="${code} flag" />
+              ${ev.tickets} Tickets
+            </span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderTransferHero(){
+    if(events[0]) document.getElementById('tr-hero').style.backgroundImage = `url('${events[0].img}')`;
+  }
+
+  function showScreen(name){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + name).classList.add('active');
+    document.querySelectorAll('.tabbar button').forEach(b => b.classList.remove('active'));
+    const map = { create:'sell', tickets:'events', events:'events', transfer:'events' };
+    const tabName = map[name] || name;
+    const btn = document.querySelector(`.tabbar button[data-tab="${tabName}"]`);
+    if(btn) btn.classList.add('active');
+  }
+
+  document.querySelectorAll('.tabbar button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const tab = btn.dataset.tab;
+      if(tab === 'events') showScreen('events');
+      else if(tab === 'sell') showScreen('create');
+      else { showToast(btn.textContent.trim() + ' — coming soon'); }
+    });
+  });
+
+  document.getElementById('tab-upcoming').addEventListener('click', ()=>{
+    document.getElementById('tab-upcoming').classList.add('active');
+    document.getElementById('tab-past').classList.remove('active');
+    renderEvents();
+  });
+  document.getElementById('tab-past').addEventListener('click', ()=>{
+    document.getElementById('tab-past').classList.add('active');
+    document.getElementById('tab-upcoming').classList.remove('active');
+    document.getElementById('event-list').innerHTML = `<div class="empty-state"><h3>No past events</h3><p>Events you've attended will show up here.</p></div>`;
+  });
+
+  // ---------- Auto-Detect Flag from Venue ----------
+  document.getElementById('create-submit').addEventListener('click', ()=>{
+    const titleVal = document.getElementById('f-title').value.trim();
+    const dateVal = document.getElementById('f-date').value.trim();
+    const venueVal = document.getElementById('f-venue').value.trim() || "United Center • Chicago, IL";
+    
+    let detectedCode = 'us';
+    const v = venueVal.toLowerCase();
+
+    if (v.includes('uk') || v.includes('united kingdom') || v.includes('london') || v.includes('england')) {
+      detectedCode = 'gb';
+    } else if (v.includes('canada') || v.includes('toronto') || v.includes('vancouver') || v.includes('montreal') || v.includes(' on') || v.includes(' bc')) {
+      detectedCode = 'ca';
+    } else if (v.includes('nigeria') || v.includes('lagos') || v.includes('abuja')) {
+      detectedCode = 'ng';
+    } else if (v.includes('germany') || v.includes('berlin') || v.includes('munich')) {
+      detectedCode = 'de';
+    } else if (v.includes('france') || v.includes('paris')) {
+      detectedCode = 'fr';
+    } else if (v.includes('japan') || v.includes('tokyo')) {
+      detectedCode = 'jp';
+    } else if (v.includes('korea') || v.includes('seoul')) {
+      detectedCode = 'kr';
+    }
+
+    const newEvent = {
+      title: titleVal ? titleVal.toUpperCase() : "UNTITLED EVENT",
+      date: dateVal || "",
+      venue: venueVal,
+      img: document.getElementById('f-img').value.trim() || "",
+      sec: document.getElementById('f-sec').value.trim() || "",
+      row: document.getElementById('f-row').value.trim() || "",
+      seat: document.getElementById('f-seat').value.trim() || "",
+      tickets: parseInt(document.getElementById('f-num').value, 10),
+      level: (document.getElementById('f-level').value.trim() || 'GENERAL').toUpperCase(),
+      countryCode: detectedCode
+    };
+    
+    events = [newEvent];
+    
+    renderTickets();
+    renderEvents();
+    renderTransferHero();
+    showToast('Ticket Booked');
+    showScreen('events');
+  });
+
+  document.getElementById('tr-send').addEventListener('click', ()=>{
+    const last = document.getElementById('tr-last').value.trim();
+    const contact = document.getElementById('tr-contact').value.trim();
+    if(!last || !contact){
+      showToast('Add a last name and contact to send');
+      return;
+    }
+    showToast(`Tickets sent to ${document.getElementById('tr-first').value} ${last} ✓`);
+    setTimeout(()=> showScreen('tickets'), 900);
+  });
+
+  let toastTimer;
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
+  }
+
+  renderTickets();
+  renderEvents();
+  renderTransferHero();
+</script>
+
+</body>
+</html>
