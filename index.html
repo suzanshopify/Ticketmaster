@@ -105,7 +105,6 @@
     padding-bottom: 5px;
     flex-shrink:0;
     border-top: 1px solid #1c1c1e;
-    /* gap: 16px; */
   }
   .tabbar button{
     background:none; border:none; color:#8a8d93;
@@ -168,7 +167,7 @@
   .ticket-art{height:150px; background-size:cover; background-position:center; position:relative;}
   .ticket-art::after{content:"";position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.65));}
   .ticket-art .info{position:absolute; left:16px; right:16px; bottom:12px; color:#fff; z-index:2;}
-  .ticket-art .info h3{margin:0 0 4px; font-size:17px; font-weight:800; line-height:1.2;}
+  .ticket-art .info h3{margin:0 0 4px; font-size:12px; font-weight:800; line-height:1.2;}
   .ticket-art .info p{margin:0; font-size:12.5px; opacity:.9;}
   .ticket-body{padding:16px; text-align:center;}
   .ticket-body .level{font-size:13px; font-weight:700; letter-spacing:.4px; color:#333; margin-bottom:14px;}
@@ -180,7 +179,7 @@
   .details-link{color:var(--blue); font-weight:700; font-size:14px; background:none; border:none; cursor:pointer; font-family:inherit;}
   .ticket-foot{height:14px; background:var(--blue);}
   .dots{display:flex; justify-content:center; gap:6px; margin:14px 0 18px;}
-  .dots span{width:6px; height:6px; border-radius:50%; background:#c8cbd1;}
+  .dots span{width:6px; height:6px; border-radius:50%; background:#c8cbd1; transition: all 0.2s ease;}
   .dots span.on{background:#000; width:7px; height:7px;}
   .action-row{display:flex; gap:12px; padding:0 20px 20px; max-width: 440px; margin: 0 auto;}
   .action-row button{
@@ -312,7 +311,7 @@
         <div class="field">
           <label for="f-num">Number of Tickets:</label>
           <select id="f-num">
-            <option selected>1</option><option>2</option><option >3</option><option>4</option><option>5</option><option>6</option>
+            <option selected>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
           </select>
         </div>
       </div>
@@ -442,7 +441,8 @@
 
   document.addEventListener('click', goFullscreen, { once: false });
 
-  let events = [
+  // Default fallback event
+  const defaultEvents = [
     {
       title: "BTS WORLD TOUR 'ARIRANG' IN CHICAGO",
       date: "Sun, Aug 27, 2026, 8:00pm",
@@ -453,26 +453,54 @@
     }
   ];
 
+  // Retrieve saved ticket from LocalStorage or fall back to default
+  let events = [];
+  const savedData = localStorage.getItem('booked_tickets');
+  if (savedData) {
+    try {
+      events = JSON.parse(savedData);
+    } catch(e) {
+      events = defaultEvents;
+    }
+  } else {
+    events = defaultEvents;
+  }
+
   function renderTickets(){
     const carousel = document.getElementById('ticket-carousel');
     const dots = document.getElementById('ticket-dots');
     carousel.innerHTML = '';
     dots.innerHTML = '';
-    events.forEach((ev, i) => {
+
+    if (!events.length) return;
+
+    const ev = events[0];
+    const ticketCount = parseInt(ev.tickets, 10) || 1;
+    const baseSeatNum = parseInt(ev.seat, 10);
+    const isNumericSeat = !isNaN(baseSeatNum);
+
+    // Build Transfer Text Details
+    let seatListText = [];
+    
+    // Render individual ticket card per booked seat
+    for (let i = 0; i < ticketCount; i++) {
+      const seatDisplay = isNumericSeat ? (baseSeatNum + i) : (ev.seat || "-");
+      seatListText.push(seatDisplay);
+
       carousel.innerHTML += `
         <div class="ticket-card">
           <div class="ticket-head">
             <div class="lbl">STANDARD TICKETS</div>
             <div class="ticket-nums">
-              <div><span class="k">SEC</span><span class="v">${ev.sec}</span></div>
-              <div><span class="k">ROW</span><span class="v">${ev.row}</span></div>
-              <div><span class="k">SEAT</span><span class="v">${ev.seat}</span></div>
+              <div><span class="k">SEC</span><span class="v">${ev.sec || "-"}</span></div>
+              <div><span class="k">ROW</span><span class="v">${ev.row || "-"}</span></div>
+              <div><span class="k">SEAT</span><span class="v">${seatDisplay}</span></div>
             </div>
           </div>
-          <div class="ticket-art" style="background-image:url('${ev.img}')">
+          <div class="ticket-art" style="background-image:url('${ev.img || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800'}')">
             <div class="info">
               <h3>${ev.title}</h3>
-              <p>${ev.date} • ${ev.venue}</p>
+              <p>${ev.date} ${ev.date && ev.venue ? '•' : ''} ${ev.venue}</p>
             </div>
           </div>
           <div class="ticket-body">
@@ -482,9 +510,26 @@
           </div>
           <div class="ticket-foot"></div>
         </div>`;
-      dots.innerHTML += `<span class="${i===0?'on':''}"></span>`;
-    });
+      
+      dots.innerHTML += `<span class="${i === 0 ? 'on' : ''}"></span>`;
+    }
+
+    // Update transfer sheet labels
+    document.getElementById('tr-count').textContent = ticketCount;
+    document.getElementById('tr-seats').textContent = `Sec ${ev.sec || '-'} Row ${ev.row || '-'} Seat ${seatListText.join(', ')}`;
   }
+
+  // Handle dot updates when scrolling through the ticket carousel
+  const ticketCarousel = document.getElementById('ticket-carousel');
+  ticketCarousel.addEventListener('scroll', () => {
+    const cardWidth = ticketCarousel.querySelector('.ticket-card')?.offsetWidth || 0;
+    if (!cardWidth) return;
+    const activeIndex = Math.round(ticketCarousel.scrollLeft / (cardWidth + 14));
+    const dots = document.querySelectorAll('#ticket-dots span');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('on', idx === activeIndex);
+    });
+  });
 
   function renderEvents(){
     const list = document.getElementById('event-list');
@@ -504,20 +549,20 @@
         document.getElementById('tickets-topbar-flag').src = flagUrl;
       }
       
-      const venueParts = ev.venue.split('•');
-      if(venueParts.length > 0) {
+      const venueParts = (ev.venue || "").split('•');
+      if(venueParts.length > 0 && venueParts[0].trim()) {
         document.getElementById('venue-title').textContent = venueParts[0].trim();
       }
-      document.getElementById('venue-address').textContent = ev.venue;
+      document.getElementById('venue-address').textContent = ev.venue || "Venue details unavailable";
 
       return `
-        <div class="event-card" style="background-image:url('${ev.img}')" onclick="showScreen('tickets')">
+        <div class="event-card" style="background-image:url('${ev.img || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800'}')" onclick="showScreen('tickets')">
           <div class="ec-info">
             <h3>${ev.title}</h3>
-            <p>${ev.date} - ${ev.venue}</p>
+            <p>${ev.date} ${ev.date && ev.venue ? '-' : ''} ${ev.venue}</p>
             <span class="tag">
               <img class="flag-img" src="${flagUrl}" alt="${code} flag" />
-              ${ev.tickets} Tickets
+              ${ev.tickets} Ticket${ev.tickets > 1 ? 's' : ''}
             </span>
           </div>
         </div>
@@ -526,7 +571,9 @@
   }
 
   function renderTransferHero(){
-    if(events[0]) document.getElementById('tr-hero').style.backgroundImage = `url('${events[0].img}')`;
+    if(events[0]) {
+      document.getElementById('tr-hero').style.backgroundImage = `url('${events[0].img || 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800'}')`;
+    }
   }
 
   function showScreen(name){
@@ -559,7 +606,7 @@
     document.getElementById('event-list').innerHTML = `<div class="empty-state"><h3>No past events</h3><p>Events you've attended will show up here.</p></div>`;
   });
 
-  // ---------- Auto-Detect Flag from Venue ----------
+  // ---------- Auto-Detect Flag & Booking Logic ----------
   document.getElementById('create-submit').addEventListener('click', ()=>{
     const titleVal = document.getElementById('f-title').value.trim();
     const dateVal = document.getElementById('f-date').value.trim();
@@ -591,13 +638,17 @@
       img: document.getElementById('f-img').value.trim() || "",
       sec: document.getElementById('f-sec').value.trim() || "",
       row: document.getElementById('f-row').value.trim() || "",
-      seat: document.getElementById('f-seat').value.trim() || "",
+      seat: document.getElementById('f-seat').value.trim() || "1",
       tickets: parseInt(document.getElementById('f-num').value, 10),
       level: (document.getElementById('f-level').value.trim() || 'GENERAL').toUpperCase(),
       countryCode: detectedCode
     };
     
+    // Replace existing ticket with new booking
     events = [newEvent];
+    
+    // Save to local storage for persistence across reopens
+    localStorage.setItem('booked_tickets', JSON.stringify(events));
     
     renderTickets();
     renderEvents();
@@ -626,6 +677,7 @@
     toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
   }
 
+  // Initial Load
   renderTickets();
   renderEvents();
   renderTransferHero();
