@@ -33,7 +33,6 @@
     }
   </script>
   <style>
-    /* CSS Filter to tint PNG images to blue (#0052cc) when active */
     .icon-active {
       filter: invert(21%) sepia(98%) saturate(3989%) hue-rotate(213deg) brightness(96%) contrast(105%);
     }
@@ -64,7 +63,7 @@
   <!-- Main Content Container -->
   <main class="w-full max-w-6xl mx-auto flex-1 pb-24 md:pb-8">
 
-    <!-- VIEW 1: MY TICKETS / MY EVENTS VIEW -->
+    <!-- VIEW 1: MY TICKETS VIEW -->
     <section id="my-tickets-view" class="p-4 sm:p-6 lg:p-8 space-y-6">
       <div class="flex border-b border-gray-800 text-sm font-semibold max-w-md">
         <button class="flex-1 py-3 border-b-2 border-white text-white">UPCOMING (1)</button>
@@ -91,7 +90,7 @@
       </div>
     </section>
 
-    <!-- VIEW 2: CREATE NEW EVENT FORM (Sell) -->
+    <!-- VIEW 2: CREATE NEW EVENT FORM -->
     <section id="create-event-view" class="hidden bg-cardBg p-6 sm:p-8 rounded-2xl border border-gray-800 shadow-xl max-w-3xl mx-auto my-6 space-y-6">
       <div class="flex justify-between items-center border-b border-gray-800 pb-4">
         <h2 class="text-2xl font-bold">New Event</h2>
@@ -101,12 +100,12 @@
       <form id="eventForm" class="space-y-4">
         <div>
           <label class="block text-xs text-gray-300 font-semibold mb-1">Show title:</label>
-          <input type="text" id="input-title" value="OLIVIA RODRIGO: THE UNRAVELED TOUR" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+          <input type="text" id="input-title" value="DON TOLIVER: NITROUS - OCTANE WORLD TOUR" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
         </div>
 
         <div>
           <label class="block text-xs text-gray-300 font-semibold mb-1">Ticket Type:</label>
-          <input type="text" id="input-ticket-type" value="AMERICAN EXPRESS PRESALE" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+          <input type="text" id="input-ticket-type" value="Standard Tickets" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
         </div>
 
         <div>
@@ -117,36 +116,36 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs text-gray-300 font-semibold mb-1">Date:</label>
-            <input type="text" id="input-date" value="OCT 26, 2026" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+            <input type="text" id="input-date" value="SEP 06, 2026" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
           </div>
           <div>
             <label class="block text-xs text-gray-300 font-semibold mb-1">Time:</label>
-            <input type="text" id="input-time" value="7:00 PM" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+            <input type="text" id="input-time" value="7:30 PM" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
           </div>
         </div>
 
         <div>
           <label class="block text-xs text-gray-300 font-semibold mb-1">Day of Week:</label>
-          <input type="text" id="input-day" value="MON" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+          <input type="text" id="input-day" value="SUN" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
         </div>
 
         <div>
           <label class="block text-xs text-gray-300 font-semibold mb-1">Location:</label>
-          <input type="text" id="input-location" value="Scotiabank Arena - Toronto, ON" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+          <input type="text" id="input-location" value="Barclays Center · Brooklyn, NY" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
         </div>
 
         <div class="grid grid-cols-3 gap-3">
           <div>
             <label class="block text-xs text-gray-300 font-semibold mb-1">Sec:</label>
-            <input type="text" id="input-sec" value="108" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+            <input type="text" id="input-sec" value="24" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
           </div>
           <div>
             <label class="block text-xs text-gray-300 font-semibold mb-1">Row:</label>
-            <input type="text" id="input-row" value="21" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+            <input type="text" id="input-row" value="10" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
           </div>
           <div>
             <label class="block text-xs text-gray-300 font-semibold mb-1">Starting Seat:</label>
-            <input type="number" id="input-seat" value="3" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+            <input type="number" id="input-seat" value="4" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
           </div>
         </div>
 
@@ -162,7 +161,7 @@
 
         <div>
           <label class="block text-xs text-gray-300 font-semibold mb-1">Order Number:</label>
-          <input type="text" id="input-order" value="08" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
+          <input type="text" id="input-order" value="52-79426/NY" class="w-full bg-inputBg border border-gray-700 rounded-lg p-3 text-sm focus:outline-none">
         </div>
 
         <div>
@@ -206,12 +205,12 @@
 
       <!-- Main Dark Event Banner -->
       <div class="bg-[#111625] text-white p-5 space-y-3">
-        <p id="detail-date-time" class="text-xs font-bold uppercase tracking-wider text-gray-300">MON, OCT 26, 2026 AT 7:00 PM</p>
+        <p id="detail-date-time" class="text-xs font-bold uppercase tracking-wider text-gray-300">SUN, SEP 06, 2026 AT 7:30 PM</p>
         
         <div class="flex justify-between items-start">
           <div>
-            <h1 id="detail-title" class="text-2xl font-black uppercase tracking-tight leading-tight">OLIVIA RODRIGO: THE UNRAVELED TOUR</h1>
-            <p id="detail-location" class="text-xs text-gray-300 mt-1">Scotiabank Arena — Toronto, ON</p>
+            <h1 id="detail-title" class="text-2xl font-black uppercase tracking-tight leading-tight">DON TOLIVER: NITROUS - OCTANE WORLD TOUR</h1>
+            <p id="detail-location" class="text-xs text-gray-300 mt-1">Barclays Center · Brooklyn, NY</p>
           </div>
           <div class="flex items-center space-x-1 text-xs bg-gray-800/80 px-2.5 py-1 rounded border border-gray-700">
             <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
@@ -232,21 +231,76 @@
       </div>
 
       <!-- Ticket List Section -->
-      <div class="p-4 sm:p-6 space-y-4 max-w-2xl mx-auto">
+      <div class="p-4 sm:p-6 space-y-6 max-w-2xl mx-auto">
         <div class="flex justify-between items-center">
           <div>
-            <h2 id="detail-order-number" class="text-lg font-extrabold">Order #08</h2>
+            <h2 id="detail-order-number" class="text-lg font-extrabold">Order #52-79426/NY</h2>
             <p id="detail-ticket-count-sub" class="text-xs text-gray-500 font-medium">x3 Tickets</p>
           </div>
           <button class="text-gray-600 text-xl font-bold">⋮</button>
         </div>
 
         <div id="tickets-container" class="space-y-4"></div>
+
+        <!-- NEW: Map Location Preview & Directions -->
+        <div class="space-y-3 pt-4 border-t border-gray-100">
+          <div class="relative w-full h-44 rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <iframe 
+              id="venue-map-iframe"
+              class="w-full h-full border-0"
+              loading="lazy"
+              allowfullscreen
+              src="https://maps.google.com/maps?q=Barclays%20Center%20Brooklyn%20NY&t=&z=15&ie=UTF8&iwloc=&output=embed">
+            </iframe>
+          </div>
+          <button onclick="openDirections()" class="w-full text-center py-2 text-base font-extrabold text-black hover:text-blue-600 transition">
+            Get Directions
+          </button>
+        </div>
+
+        <!-- NEW: "YOU GOT TICKETS!" Media Card -->
+        <div class="relative bg-black rounded-xl overflow-hidden text-white shadow-lg flex min-h-[160px] border border-gray-800">
+          <!-- Artist / Media Preview Image with Overlay Play Button -->
+          <div class="relative w-1/2 bg-cover bg-center" id="media-card-img" style="background-image: url('https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=600&q=80');">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center pl-1">
+                <svg class="w-5 h-5 text-white fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="absolute bottom-2 left-2 right-2 space-y-1">
+              <p id="media-card-datetime" class="text-[9px] font-bold tracking-wider text-gray-200 uppercase">SUN · SEP 06, 2026 · 7:30 PM</p>
+              <p id="media-card-title" class="text-[10px] font-black leading-tight uppercase line-clamp-2">DON TOLIVER: NITROUS - OCTANE WORLD TOUR...</p>
+              <p id="media-card-location" class="text-[9px] text-gray-300 truncate">Barclays Center · Brooklyn, NY</p>
+            </div>
+          </div>
+
+          <!-- Promo Banner Content -->
+          <div class="w-1/2 p-4 flex flex-col justify-center items-center text-center space-y-1 bg-black">
+            <h3 class="text-xl font-black uppercase tracking-tight leading-none text-white">YOU GOT<br>TICKETS!</h3>
+            <div class="w-8 h-[2px] bg-white my-1"></div>
+          </div>
+        </div>
+
+        <!-- NEW: Social Sharing Callout -->
+        <div class="space-y-3 pt-2 text-left">
+          <h3 class="text-base font-extrabold text-black">Post on Social Media</h3>
+          <p class="text-xs text-gray-500 leading-relaxed font-medium">
+            Build hype for the event, and share that you got tickets with your friends and family.
+          </p>
+          <button onclick="shareEvent()" class="w-full flex items-center justify-center space-x-2 py-3 border border-gray-300 rounded-xl text-sm font-bold text-black hover:bg-gray-50 transition shadow-sm mt-3">
+            <span>Share You're Going</span>
+            <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+            </svg>
+          </button>
+        </div>
+
       </div>
 
       <!-- Floating Transfer & Sell Control Pill -->
       <div class="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md rounded-full px-6 py-2 shadow-2xl border border-gray-200 flex items-center space-x-8 text-black">
-        <button onclick="toggleModal('transfer-modal', true)" class="flex flex-col items-center hover:text-blue-600 transition">
+        <button onclick="startTransferFlow()" class="flex flex-col items-center hover:text-blue-600 transition">
           <svg class="w-5 h-5 mb-0.5 stroke-black" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
           </svg>
@@ -287,72 +341,167 @@
 
   </main>
 
-  <!-- TRANSFER MODAL -->
-  <div id="transfer-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
-    <div class="bg-cardBg p-6 sm:p-8 rounded-2xl w-full max-w-lg space-y-4 border border-gray-700 shadow-2xl text-white">
-      <div class="flex justify-between items-center border-b border-gray-800 pb-3">
-        <h3 class="text-lg font-bold">RECIPIENT DETAILS</h3>
-        <button onclick="toggleModal('transfer-modal', false)" class="text-gray-400 hover:text-white text-sm">Cancel</button>
+  <!-- ================= MULTI-STEP TRANSFER FLOW MODALS ================= -->
+
+  <!-- AUTHENTICATION SCREEN -->
+  <div id="transfer-auth" class="hidden fixed inset-0 bg-darkBg z-50 flex flex-col justify-between">
+    <div>
+      <div class="bg-blue-600 text-white px-4 py-3 flex justify-between items-center shadow-md">
+        <button onclick="closeTransferFlow()" class="text-sm font-semibold">Cancel</button>
+        <h3 class="font-bold text-base">Authentication</h3>
+        <div class="w-8"></div>
       </div>
 
-      <form class="space-y-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">First Name</label>
-            <input type="text" class="w-full bg-inputBg border border-gray-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
+      <div class="max-w-md mx-auto p-6 text-center space-y-6 mt-4">
+        <div class="flex justify-center">
+          <div class="bg-blue-600 p-6 rounded-2xl shadow-inner text-white flex items-center justify-center w-24 h-16 border-r-8 border-yellow-500 relative">
+            <span class="text-2xl font-bold tracking-widest">* * *</span>
           </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">Last Name</label>
-            <input type="text" class="w-full bg-inputBg border border-gray-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
-          </div>
-        </div>
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">Email</label>
-          <input type="email" class="w-full bg-inputBg border border-gray-700 rounded-lg p-2.5 text-sm text-white focus:outline-none">
         </div>
 
-        <button type="button" onclick="alert('Transfer Successful!'); toggleModal('transfer-modal', false);" class="w-full bg-accentBlue hover:bg-blue-600 py-3 rounded-lg font-bold text-sm transition">Transfer Tickets</button>
-      </form>
+        <div class="space-y-2 text-left">
+          <h3 class="text-lg font-extrabold text-white">Authenticate Your Account</h3>
+          <p class="text-xs text-gray-300 leading-relaxed">
+            A one-time code has been sent to ******7327. Please enter your code below to continue.
+          </p>
+        </div>
+
+        <div class="text-left space-y-2">
+          <label class="block text-xs font-bold text-gray-300">One-Time Code</label>
+          <input type="text" id="otp-input" maxlength="6" class="w-full bg-white text-black font-bold tracking-widest text-lg rounded-md p-3 border border-gray-300 focus:outline-none">
+          <p class="text-[11px] text-gray-400">It may take a minute to receive your code.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 max-w-md mx-auto w-full">
+      <button onclick="goToSelectTickets()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-lg text-sm transition shadow-lg">
+        Verify Code
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 1: SELECT TICKETS TO TRANSFER -->
+  <div id="transfer-step1" class="hidden fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-end justify-center">
+    <div class="bg-white text-black w-full max-w-md rounded-t-3xl p-6 space-y-5 animate-slide-up shadow-2xl">
+      <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto"></div>
+      
+      <div class="text-center space-y-1">
+        <h3 class="text-lg font-black tracking-tight uppercase">SELECT TICKETS TO TRANSFER</h3>
+        <p id="transfer-sec-row" class="text-xs font-semibold text-gray-500">Sec 24, Row 10</p>
+      </div>
+
+      <div id="seat-selection-container" class="flex justify-center space-x-3 py-2"></div>
+
+      <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+        <span id="selected-count-label" class="text-sm font-bold text-gray-800">1 Selected</span>
+        <button onclick="goToTransferStep(2)" class="text-blue-600 text-sm font-extrabold flex items-center space-x-1 hover:underline">
+          <span>TRANSFER TO</span>
+          <span>›</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: RECIPIENT DETAILS -->
+  <div id="transfer-step2" class="hidden fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-end justify-center">
+    <div class="bg-white text-black w-full max-w-md rounded-t-3xl p-6 space-y-4 animate-slide-up shadow-2xl">
+      <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto"></div>
+
+      <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+        <h3 class="text-base font-extrabold tracking-tight">RECIPIENT DETAILS</h3>
+        <button onclick="closeTransferFlow()" class="text-gray-400 font-bold text-sm">Cancel</button>
+      </div>
+
+      <div class="space-y-3 text-left">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">First Name</label>
+          <input type="text" id="recipient-firstname" placeholder="First Name" class="w-full bg-white border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:border-blue-600">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Last Name</label>
+          <input type="text" id="recipient-lastname" placeholder="Last Name" class="w-full bg-white border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:border-blue-600">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Email</label>
+          <input type="email" id="recipient-email" placeholder="Enter Email Address" class="w-full bg-white border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:border-blue-600">
+          <button type="button" class="text-xs text-blue-600 font-semibold mt-1">Use Mobile Number instead</button>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Note</label>
+          <textarea id="recipient-note" rows="2" placeholder="Add an optional note" class="w-full bg-white border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:border-blue-600"></textarea>
+        </div>
+      </div>
+
+      <button onclick="goToTransferStep(4)" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-lg text-sm transition mt-2">
+        Send Transfer
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 4: TRANSFER SUCCESS POPUP -->
+  <div id="transfer-step4" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
+    <div class="bg-white text-black p-8 rounded-3xl w-full max-w-sm text-center space-y-5 shadow-2xl animate-fade-in">
+      <div class="w-20 h-20 border-4 border-blue-500 rounded-full flex items-center justify-center mx-auto">
+        <svg class="w-10 h-10 text-blue-500 stroke-[3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+      </div>
+
+      <div class="space-y-2">
+        <h3 class="text-2xl font-black tracking-tight text-gray-900">Successful!</h3>
+        <p class="text-sm font-semibold text-gray-500">Ticket Transfer was successful.</p>
+      </div>
+
+      <button onclick="closeTransferFlow()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-base transition shadow-md">
+        OK
+      </button>
     </div>
   </div>
 
   <!-- MOBILE BOTTOM NAVIGATION -->
   <nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around py-2 px-1 z-30 shadow-lg">
-    
-    <!-- Discover -->
     <button id="nav-discover" onclick="switchView('discover-view')" class="nav-btn flex flex-col items-center flex-1 text-gray-500 transition">
       <img src="assets/discover.png" class="nav-icon w-6 h-6 object-contain" alt="Discover">
       <span class="nav-text text-[11px] font-bold mt-1">Discover</span>
     </button>
 
-    <!-- Favorites -->
     <button id="nav-favorites" onclick="switchView('favorites-view')" class="nav-btn flex flex-col items-center flex-1 text-gray-500 transition">
       <img src="assets/Fav.png" class="nav-icon w-6 h-6 object-contain" alt="Favorites">
       <span class="nav-text text-[11px] font-bold mt-1">Favorites</span>
     </button>
 
-    <!-- My Tickets -->
     <button id="nav-tickets" onclick="switchView('my-tickets-view')" class="nav-btn flex flex-col items-center flex-1 text-gray-500 transition">
       <img src="assets/My Ticket.png" class="nav-icon w-6 h-6 object-contain" alt="My Tickets">
       <span class="nav-text text-[11px] font-bold mt-1">My Tickets</span>
     </button>
 
-    <!-- Sell -->
     <button id="nav-sell" onclick="switchView('create-event-view')" class="nav-btn flex flex-col items-center flex-1 text-gray-500 transition">
       <img src="assets/sell.png" class="nav-icon w-6 h-6 object-contain" alt="Sell">
       <span class="nav-text text-[11px] font-bold mt-1">Sell</span>
     </button>
 
-    <!-- My Account -->
     <button id="nav-account" onclick="switchView('account-view')" class="nav-btn flex flex-col items-center flex-1 text-gray-500 transition">
       <img src="assets/my account.png" class="nav-icon w-6 h-6 object-contain" alt="My Account">
       <span class="nav-text text-[11px] font-bold mt-1">My Account</span>
     </button>
-
   </nav>
 
-  <!-- View Switcher & Dynamic Data Logic -->
+  <!-- Script Logic -->
   <script>
+    let currentTicketState = {
+      sec: '24',
+      row: '10',
+      seatStart: 4,
+      count: 3,
+      location: 'Barclays Center · Brooklyn, NY'
+    };
+
+    let selectedSeats = [];
+
     function switchView(viewId) {
       document.getElementById('create-event-view').classList.add('hidden');
       document.getElementById('my-tickets-view').classList.add('hidden');
@@ -426,6 +575,8 @@
       const username = document.getElementById('input-username').value;
       const email = document.getElementById('input-email').value;
 
+      currentTicketState = { sec, row, seatStart, count, location: loc };
+
       const flagImg = document.getElementById('header-flag');
       if (flagUrl) {
         flagImg.src = flagUrl;
@@ -439,10 +590,27 @@
       if (img) document.getElementById('card-hero-img').style.backgroundImage = `url('${img}')`;
       document.getElementById('card-date-time').innerText = `${day} · ${date} · ${time}`;
 
-      if (img) document.getElementById('detail-hero-img').style.backgroundImage = `url('${img}')`;
+      if (img) {
+        document.getElementById('detail-hero-img').style.backgroundImage = `url('${img}')`;
+        document.getElementById('media-card-img').style.backgroundImage = `url('${img}')`;
+      }
+      
       document.getElementById('detail-date-time').innerText = `${day}, ${date} AT ${time}`;
-      if (title) document.getElementById('detail-title').innerText = title;
-      if (loc) document.getElementById('detail-location').innerText = loc;
+      document.getElementById('media-card-datetime').innerText = `${day} · ${date} · ${time}`;
+      
+      if (title) {
+        document.getElementById('detail-title').innerText = title;
+        document.getElementById('media-card-title').innerText = title;
+      }
+      if (loc) {
+        document.getElementById('detail-location').innerText = loc;
+        document.getElementById('media-card-location').innerText = loc;
+        
+        // Dynamically update Google Map embed src based on location
+        const encodedLoc = encodeURIComponent(loc);
+        document.getElementById('venue-map-iframe').src = `https://maps.google.com/maps?q=${encodedLoc}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+      }
+      
       document.getElementById('detail-count-badge').innerText = `x${count}`;
       document.getElementById('detail-order-number').innerText = `Order #${order}`;
       document.getElementById('detail-ticket-count-sub').innerText = `x${count} Tickets`;
@@ -476,10 +644,107 @@
       switchView('ticket-detail-view');
     }
 
-    function toggleModal(modalId, show) {
-      const modal = document.getElementById(modalId);
-      if (show) modal.classList.remove('hidden');
-      else modal.classList.add('hidden');
+    function openDirections() {
+      const loc = encodeURIComponent(currentTicketState.location);
+      window.open(`https://www.google.com/maps/search/?api=1&query=${loc}`, '_blank');
+    }
+
+    function shareEvent() {
+      if (navigator.share) {
+        navigator.share({
+          title: document.getElementById('detail-title').innerText,
+          text: `I got tickets to ${document.getElementById('detail-title').innerText}!`,
+          url: window.location.href,
+        }).catch(() => {});
+      } else {
+        alert("Sharing link copied to clipboard!");
+      }
+    }
+
+    function startTransferFlow() {
+      closeTransferFlow();
+      document.getElementById('transfer-auth').classList.remove('hidden');
+    }
+
+    function goToSelectTickets() {
+      document.getElementById('transfer-auth').classList.add('hidden');
+      document.getElementById('transfer-sec-row').innerText = `Sec ${currentTicketState.sec}, Row ${currentTicketState.row}`;
+      
+      const container = document.getElementById('seat-selection-container');
+      container.innerHTML = '';
+      selectedSeats = [];
+
+      for (let i = 0; i < currentTicketState.count; i++) {
+        const seatNum = currentTicketState.seatStart + i;
+        const isSelected = (i === 0);
+        if (isSelected) selectedSeats.push(seatNum);
+
+        const seatBox = document.createElement('div');
+        seatBox.id = `seat-box-${seatNum}`;
+        seatBox.onclick = () => toggleSeatSelection(seatNum);
+        seatBox.className = `flex-1 border rounded-xl overflow-hidden cursor-pointer transition ${
+          isSelected ? 'border-blue-600 bg-white' : 'border-gray-300 bg-gray-50'
+        }`;
+
+        seatBox.innerHTML = `
+          <div class="bg-blue-600 text-white text-[11px] font-extrabold py-1 text-center">
+            SEAT ${seatNum}
+          </div>
+          <div class="p-3 flex justify-center items-center">
+            <div id="check-${seatNum}" class="w-6 h-6 rounded-full flex items-center justify-center ${
+              isSelected ? 'bg-blue-600 text-white' : 'border border-gray-400'
+            }">
+              ${isSelected ? '✓' : ''}
+            </div>
+          </div>
+        `;
+
+        container.appendChild(seatBox);
+      }
+
+      updateSelectedCountLabel();
+      goToTransferStep(1);
+    }
+
+    function toggleSeatSelection(seatNum) {
+      const index = selectedSeats.indexOf(seatNum);
+      if (index > -1) {
+        selectedSeats.splice(index, 1);
+      } else {
+        selectedSeats.push(seatNum);
+      }
+
+      const check = document.getElementById(`check-${seatNum}`);
+      const isSelected = selectedSeats.includes(seatNum);
+
+      if (isSelected) {
+        check.className = 'w-6 h-6 rounded-full flex items-center justify-center bg-blue-600 text-white';
+        check.innerText = '✓';
+      } else {
+        check.className = 'w-6 h-6 rounded-full flex items-center justify-center border border-gray-400';
+        check.innerText = '';
+      }
+
+      updateSelectedCountLabel();
+    }
+
+    function updateSelectedCountLabel() {
+      document.getElementById('selected-count-label').innerText = `${selectedSeats.length} Selected`;
+    }
+
+    function goToTransferStep(step) {
+      document.getElementById('transfer-step1').classList.add('hidden');
+      document.getElementById('transfer-step2').classList.add('hidden');
+      document.getElementById('transfer-step4').classList.add('hidden');
+
+      document.getElementById(`transfer-step${step}`).classList.remove('hidden');
+    }
+
+    function closeTransferFlow() {
+      document.getElementById('transfer-auth').classList.add('hidden');
+      document.getElementById('transfer-step1').classList.add('hidden');
+      document.getElementById('transfer-step2').classList.add('hidden');
+      document.getElementById('transfer-step4').classList.add('hidden');
     }
 
     window.onload = function() {
