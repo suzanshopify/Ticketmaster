@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
   <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
   <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
@@ -35,6 +35,17 @@
   <style>
     .icon-active {
       filter: invert(21%) sepia(98%) saturate(3989%) hue-rotate(213deg) brightness(96%) contrast(105%);
+    }
+    
+    /* iPhone Notch & Safe Area Styles */
+    .safe-top {
+      padding-top: env(safe-area-inset-top, 0px);
+    }
+    .safe-bottom-padding {
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+    }
+    .safe-bottom-margin {
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 5rem);
     }
     
     /* Ticketmaster Reference Specific Overrides */
@@ -110,10 +121,10 @@
     }
   </style>
 </head>
-<body class="bg-darkBg text-white min-h-screen font-sans flex flex-col justify-between">
+<body class="bg-darkBg text-white min-h-screen min-h-[100dvh] font-sans flex flex-col justify-between">
 
   <!-- Desktop Navigation Header -->
-  <header id="main-header" class="w-full bg-darkBg border-b border-gray-800 sticky top-0 z-20 px-4 py-3 sm:px-8">
+  <header id="main-header" class="w-full bg-darkBg border-b border-gray-800 sticky top-0 z-20 px-4 py-3 sm:px-8 safe-top">
     <div class="max-w-6xl mx-auto flex items-center relative min-h-[36px]">
       <nav class="hidden md:flex space-x-6 text-sm font-semibold text-gray-300">
         <button onclick="switchView('discover-view')" class="hover:text-accentBlue transition">Discover</button>
@@ -133,7 +144,7 @@
   </header>
 
   <!-- Main Content Container -->
-  <main class="w-full max-w-6xl mx-auto flex-1 pb-24 md:pb-8">
+  <main class="w-full max-w-6xl mx-auto flex-1 pb-36 md:pb-12">
 
     <!-- VIEW 1: MY TICKETS VIEW -->
     <section id="my-tickets-view" class="p-4 sm:p-6 lg:p-8 space-y-6">
@@ -166,7 +177,7 @@
     </section>
 
     <!-- VIEW 2: CREATE NEW EVENT FORM -->
-    <section id="create-event-view" class="hidden bg-cardBg p-6 sm:p-8 rounded-2xl border border-gray-800 shadow-xl max-w-3xl mx-auto my-6 space-y-6">
+    <section id="create-event-view" class="hidden bg-cardBg p-4 sm:p-8 rounded-2xl border border-gray-800 shadow-xl max-w-3xl mx-auto my-4 sm:my-6 space-y-6">
       <div class="flex justify-between items-center border-b border-gray-800 pb-4">
         <h2 class="text-2xl font-bold">New Event</h2>
         <button type="button" onclick="switchView('my-tickets-view')" class="text-gray-400 hover:text-white text-sm">× Cancel</button>
@@ -266,10 +277,10 @@
     </section>
 
     <!-- VIEW 5: TICKET DETAIL & FLOATING ACTIONS -->
-    <section id="ticket-detail-view" class="hidden min-h-screen bg-white text-black relative pb-28">
+    <section id="ticket-detail-view" class="hidden min-h-screen min-h-[100dvh] bg-white text-black relative pb-36">
       
       <!-- Top Hero Card Container -->
-      <div class="px-3 pt-3 bg-[#0b111e]">
+      <div class="px-3 pt-3 bg-[#0b111e] safe-top">
         <div class="tm-hero-card relative">
           
           <!-- Top Image Header with Overlay Controls -->
@@ -291,7 +302,7 @@
                 <h1 id="detail-title" class="tm-event-title">DON TOLIVER: NITROUS - OCTANE WORLD TOUR</h1>
                 <p id="detail-location" class="text-xs text-[#9A9EA8] mt-3">Barclays Center · Brooklyn, NY</p>
               </div>
-              <div class="tm-badge flex-shrink-0 ">
+              <div class="tm-badge flex-shrink-0">
                 <svg class="w-3.5 h-3.5 text-gray-300 rotate-[-40deg]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
                 <span id="detail-count-badge" class="font-bold text-xs text-white">x3</span>
               </div>
@@ -384,7 +395,7 @@
         </div>
 
         <!-- Floating Transfer & Sell Control Pill -->
-        <div class="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md rounded-full px-6 py-2 shadow-2xl border border-[#E5E7EB] flex items-center space-x-8 text-black">
+        <div class="fixed safe-bottom-margin left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md rounded-full px-6 py-2 shadow-2xl border border-[#E5E7EB] flex items-center space-x-8 text-black">
           <button onclick="startTransferFlow()" class="flex flex-col items-center hover:text-[#0057D9] transition">
             <svg class="w-5 h-5 mb-0.5 stroke-black" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
@@ -437,7 +448,7 @@
   </div>
 
   <!-- AUTHENTICATION SCREEN -->
-  <div id="transfer-auth" class="hidden fixed inset-0 bg-darkBg z-50 flex flex-col justify-between">
+  <div id="transfer-auth" class="hidden fixed inset-0 bg-darkBg z-50 flex flex-col justify-between safe-top safe-bottom-padding">
     <div>
       <div class="bg-[#0057D9] text-white px-4 py-3 flex justify-between items-center shadow-md">
         <button onclick="closeTransferFlow()" class="text-sm font-semibold">Cancel</button>
@@ -476,7 +487,7 @@
 
   <!-- STEP 1: SELECT TICKETS TO TRANSFER -->
   <div id="transfer-step1" class="hidden fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-end justify-center">
-    <div class="bg-white text-black w-full max-w-md rounded-t-3xl p-6 space-y-5 animate-slide-up shadow-2xl">
+    <div class="bg-white text-black w-full max-w-md max-h-[90vh] overflow-y-auto rounded-t-3xl p-6 space-y-5 shadow-2xl safe-bottom-padding">
       <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto"></div>
       
       <div class="text-center space-y-1">
@@ -498,7 +509,7 @@
 
   <!-- STEP 2: RECIPIENT DETAILS -->
   <div id="transfer-step2" class="hidden fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-end justify-center">
-    <div class="bg-white text-black w-full max-w-md rounded-t-3xl p-6 space-y-4 animate-slide-up shadow-2xl">
+    <div class="bg-white text-black w-full max-w-md max-h-[90vh] overflow-y-auto rounded-t-3xl p-6 space-y-4 shadow-2xl safe-bottom-padding">
       <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto"></div>
 
       <div class="flex justify-between items-center border-b border-gray-100 pb-3">
@@ -537,7 +548,7 @@
 
   <!-- STEP 4: TRANSFER SUCCESS POPUP -->
   <div id="transfer-step4" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
-    <div class="bg-white text-black p-8 rounded-3xl w-full max-w-sm text-center space-y-5 shadow-2xl animate-fade-in">
+    <div class="bg-white text-black p-8 rounded-3xl w-full max-w-sm text-center space-y-5 shadow-2xl">
       <div class="w-20 h-20 border-4 border-blue-500 rounded-full flex items-center justify-center mx-auto">
         <svg class="w-10 h-10 text-blue-500 stroke-[3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -556,7 +567,7 @@
   </div>
 
   <!-- MOBILE BOTTOM NAVIGATION -->
-  <nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-[#E5E7EB] flex justify-around py-2 px-1 z-30 shadow-lg">
+  <nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-[#E5E7EB] flex justify-around py-2 px-1 z-30 shadow-lg safe-bottom-padding">
     <button id="nav-discover" onclick="switchView('discover-view')" class="nav-btn flex flex-col items-center flex-1 text-gray-500 transition">
       <img src="assets/discover.png" class="nav-icon w-6 h-6 object-contain" alt="Discover">
       <span class="nav-text text-[11px] font-bold mt-1">Discover</span>
@@ -659,7 +670,6 @@
     }
 
     function saveEventAndSync() {
-      // Ensure extra details remain hidden on initial view load
       document.getElementById('extra-details').classList.add('hidden');
 
       const title = document.getElementById('input-title').value;
